@@ -29,6 +29,14 @@ endif
     let g:neocomplete#enable_at_startup=1
     let g:neocomplete#enable_smart_case=1
 
+    " C completion
+    let g:marching_clang_command="/usr/bin/clang"
+    let g:marching_enable_neocomplete=1
+    let g:marching_clang_command_option="-std=c++1y"
+
+    " Clang-completion
+    imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+
     " Snippet plugin key-mappings.
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -74,6 +82,8 @@ endif
     au BufNewFile,BufRead *.{color,ansi,esc} set filetype=colored
     au BufNewFile,BufRead *.{md,markdown,mdown,mkd} set filetype=markdown
   augroup END
+
+  au FileType html set matchpairs+=<:>-]
 
   NeoBundle 'scrooloose/syntastic'          " Syntax-check / error reporting
   NeoBundle 'Shougo/context_filetype.vim'   " Wrap language-type in any file
