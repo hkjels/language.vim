@@ -6,12 +6,22 @@
 " Author: Henrik Kjelsberg <hkjels@me.com> (http://take.no/)
 " Version: 0.0.1
 "
+" TODO Make context_filetype execute properly
+"
 
 if exists('g:loaded_language')
   finish
 else
   let g:loaded_language = 1
 endif
+
+
+augroup filetypedetect
+  au BufNewFile,BufRead *.conf set filetype=apache
+  au BufNewFile,BufRead *.{scss,sass} set filetype=sass
+  au BufNewFile,BufRead *.{color,ansi,esc} set filetype=colored
+  au BufNewFile,BufRead *.{md,markdown,mdown,mkd} set filetype=markdown
+augroup END
 
 
 " Completion ----------------------------------------------------------- {{{
@@ -76,13 +86,6 @@ endif
 
 " Languages ------------------------------------------------------------ {{{
 
-  augroup filetypedetect
-    au BufNewFile,BufRead *.conf set filetype=apache
-    au BufNewFile,BufRead *.{scss,sass} set filetype=sass
-    au BufNewFile,BufRead *.{color,ansi,esc} set filetype=colored
-    au BufNewFile,BufRead *.{md,markdown,mdown,mkd} set filetype=markdown
-  augroup END
-
   au FileType html set matchpairs+=<:>
 
   NeoBundle 'scrooloose/syntastic'          " Syntax-check / error reporting
@@ -98,6 +101,7 @@ endif
   NeoBundleLazy 'wavded/vim-stylus', { 'autoload': { 'filetypes': ['styl'] } }
   NeoBundleLazy 'AnsiEsc.vim', { 'autoload': { 'filetypes': ['color', 'ansi', 'esc'] } }
   NeoBundleLazy 'html5.vim', {'autoload': {'filetypes': ['html']}}
+  NeoBundleLazy 'osyo-manga/unite-highlight', {'autoload': {'unite_sources': ['highlight']}}
 
 " }}}
 
