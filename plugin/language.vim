@@ -83,7 +83,7 @@ endif
     au BufNewFile,BufRead *.{md,markdown,mdown,mkd} set filetype=markdown
   augroup END
 
-  au FileType html set matchpairs+=<:>-]
+  au FileType html set matchpairs+=<:>
 
   NeoBundle 'scrooloose/syntastic'          " Syntax-check / error reporting
   NeoBundle 'Shougo/context_filetype.vim'   " Wrap language-type in any file
