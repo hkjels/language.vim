@@ -97,6 +97,7 @@ endif
   NeoBundleLazy 'tpope/vim-haml', { 'autoload': { 'filetypes': ['sass', 'scss', 'haml'] } }
   NeoBundleLazy 'wavded/vim-stylus', { 'autoload': { 'filetypes': ['styl'] } }
   NeoBundleLazy 'AnsiEsc.vim', { 'autoload': { 'filetypes': ['color', 'ansi', 'esc'] } }
+  NeoBundleLazy 'html5.vim', {'autoload': {'filetypes': ['html']}}
 
 " }}}
 
