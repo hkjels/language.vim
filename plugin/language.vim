@@ -29,11 +29,18 @@ augroup END
     \   ['rstacruz/sparkup', {'rtp': 'vim', 'autoload': { 'filetypes': ['html'] }}],
     \   'honza/vim-snippets'
     \ ]}
-  NeoBundleLazy 'eagletmt/neco-ghc', { 'autoload': { 'filetypes': ['haskell'] } }
-  NeoBundleLazy 'osyo-manga/vim-marching', { 'autoload': { 'filetypes': ['c', 'cpp'] } }
   NeoBundle 'scrooloose/syntastic'          " Syntax-check / error reporting
   NeoBundle 'Shougo/context_filetype.vim'   " Wrap language-type in any file
   NeoBundle 'osyo-manga/vim-watchdogs'      " Async syntax-highlighting, includes whole bunch of languages
+  NeoBundleLazy 'marijnh/tern_for_vim', {
+    \   'build': {'mac': 'npm install'}
+    \   'autoload': {
+    \     'functions': ['tern#Complete', 'tern#Enable'],
+    \     'filetypes': ['javascript'],
+    \   }
+    \ }
+  NeoBundleLazy 'eagletmt/neco-ghc', { 'autoload': { 'filetypes': ['haskell'] } }
+  NeoBundleLazy 'osyo-manga/vim-marching', { 'autoload': { 'filetypes': ['c', 'cpp'] } }
   NeoBundleLazy 'chrisbra/csv.vim', { 'autoload': { 'filetypes': ['csv', 'dat', 'dsv'] } }
   NeoBundleLazy 'digitaltoad/vim-jade', { 'autoload': { 'filetypes': ['jade'] } }
   NeoBundleLazy 'jcf/vim-latex', { 'autoload': { 'filetypes': ['tex'] } }
@@ -42,13 +49,13 @@ augroup END
   NeoBundleLazy 'tpope/vim-haml', { 'autoload': { 'filetypes': ['sass', 'scss', 'haml'] } }
   NeoBundleLazy 'wavded/vim-stylus', { 'autoload': { 'filetypes': ['styl'] } }
   NeoBundleLazy 'AnsiEsc.vim', { 'autoload': { 'filetypes': ['color', 'ansi', 'esc'] } }
-  NeoBundleLazy 'html5.vim', {'autoload': {'filetypes': ['html']}}
   NeoBundleLazy 'osyo-manga/unite-highlight', {'autoload': {'unite_sources': ['highlight']}}
+  NeoBundleLazy 'othree/html5.vim', { 'autoload': { 'filetypes': ['html']}}
 " }}}
 
 " Completion ----------------------------------------------------------- {{{
-  let s:bundle = neobundle#get('neocomplete')
-  function! s:bundle.hooks.on_source(bundle)
+  let s:bundle=neobundle#get('neocomplete')
+  function! s:bundle.hooks.on_post_source(bundle)
     let g:acp_enableAtStartup=0
     let g:neocomplete#enable_at_startup=1
     let g:neocomplete#enable_smart_case=1
@@ -58,24 +65,6 @@ augroup END
     let g:marching_enable_neocomplete=1
     let g:marching_clang_command_option="-std=c++1y"
     imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
-
-    " Snippet plugin key-mappings.
-    " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    " xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-    " SuperTab like snippets behavior.
-    imap <silent><expr><TAB> neosnippet#expandable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-      \ "\<C-e>" : "\<TAB>")
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: "\<TAB>"
-
-    " For snippet_complete marker.
-    if has('conceal')
-      set conceallevel=2 concealcursor=i
-    endif
 
     " Enable omni completion.
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -91,6 +80,7 @@ augroup END
     let g:neocomplete#sources#omni#input_patterns.c='[^.[:digit:] *\t]\%(\.\|->\)'
     let g:neocomplete#sources#omni#input_patterns.cpp='[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
     let g:neocomplete#sources#omni#input_patterns.php='[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplete#sources#omni#functions.javascript='tern#Complete'
   endfunction
   unlet s:bundle
 " }}}
@@ -98,8 +88,9 @@ augroup END
 
 " Languages ------------------------------------------------------------ {{{
   au FileType html set matchpairs+=<:>
+
   " Syntastic
-  let s:bundle = neobundle#get('syntastic')
+  let s:bundle=neobundle#get('syntastic')
   function! s:bundle.hooks.on_source(bundle)
     set laststatus=2
     let g:syntastic_enable_signs=1
