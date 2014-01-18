@@ -54,35 +54,31 @@ augroup END
 " }}}
 
 " Completion ----------------------------------------------------------- {{{
-  let s:bundle=neobundle#get('neocomplete')
-  function! s:bundle.hooks.on_post_source(bundle)
-    let g:acp_enableAtStartup=0
-    let g:neocomplete#enable_at_startup=1
-    let g:neocomplete#enable_smart_case=1
+  let g:acp_enableAtStartup=0
+  let g:neocomplete#enable_at_startup=1
+  let g:neocomplete#enable_smart_case=1
 
-    " C completion
-    let g:marching_clang_command="/usr/bin/clang"
-    let g:marching_enable_neocomplete=1
-    let g:marching_clang_command_option="-std=c++1y"
-    imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+  " C completion
+  let g:marching_clang_command="/usr/bin/clang"
+  let g:marching_enable_neocomplete=1
+  let g:marching_clang_command_option="-std=c++1y"
+  imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
 
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-      let g:neocomplete#sources#omni#input_patterns={}
-    endif
-    let g:neocomplete#sources#omni#input_patterns.c='[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplete#sources#omni#input_patterns.cpp='[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-    let g:neocomplete#sources#omni#input_patterns.php='[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplete#sources#omni#functions.javascript='tern#Complete'
-  endfunction
-  unlet s:bundle
+  " Enable heavy omni completion.
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns={}
+  endif
+  let g:neocomplete#sources#omni#input_patterns.c='[^.[:digit:] *\t]\%(\.\|->\)'
+  let g:neocomplete#sources#omni#input_patterns.cpp='[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+  let g:neocomplete#sources#omni#input_patterns.php='[^. \t]->\h\w*\|\h\w*::'
+  let g:neocomplete#sources#omni#functions.javascript='tern#Complete'
 " }}}
 
 
@@ -90,12 +86,8 @@ augroup END
   au FileType html set matchpairs+=<:>
 
   " Syntastic
-  let s:bundle=neobundle#get('syntastic')
-  function! s:bundle.hooks.on_source(bundle)
-    set laststatus=2
-    let g:syntastic_enable_signs=1
-    let g:syntastic_auto_jump=0
-  endfunction
-  unlet s:bundle
+  set laststatus=2
+  let g:syntastic_enable_signs=1
+  let g:syntastic_auto_jump=0
 " }}}
 
