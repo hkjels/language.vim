@@ -29,28 +29,51 @@ augroup END
     \   ['rstacruz/sparkup', {'rtp': 'vim', 'autoload': { 'filetypes': ['html'] }}],
     \   'honza/vim-snippets'
     \ ]}
+  NeoBundle 'Raimondi/delimitMate'          " Add end-delimiters
+  NeoBundle 'tsaleh/vim-align'              " Align by specified character(s)
+  NeoBundle 'tpope/vim-commentary'          " Quickly comment/un-comment
+  NeoBundle 'tpope/vim-endwise'             " Adds ending to blocks
+  NeoBundle 'tpope/vim-ragtag'              " Simplify html/xml-editing
+  NeoBundle 'tpope/vim-speeddating'         " Quick incrementation of a variety of values
+  NeoBundle 'tpope/vim-surround'            " Surround text with specified delimiter
   NeoBundle 'scrooloose/syntastic'          " Syntax-check / error reporting
   NeoBundle 'Shougo/context_filetype.vim'   " Wrap language-type in any file
   NeoBundle 'osyo-manga/vim-watchdogs'      " Async syntax-highlighting, includes whole bunch of languages
+  NeoBundleLazy 'kana/vim-textobj-user'     " Customized text-objects
   NeoBundleLazy 'marijnh/tern_for_vim', {
-    \   'build': {'mac': 'npm install'}
+    \   'build': {'mac': 'npm install'},
     \   'autoload': {
     \     'functions': ['tern#Complete', 'tern#Enable'],
     \     'filetypes': ['javascript'],
     \   }
-    \ }
-  NeoBundleLazy 'eagletmt/neco-ghc', { 'autoload': { 'filetypes': ['haskell'] } }
-  NeoBundleLazy 'osyo-manga/vim-marching', { 'autoload': { 'filetypes': ['c', 'cpp'] } }
-  NeoBundleLazy 'chrisbra/csv.vim', { 'autoload': { 'filetypes': ['csv', 'dat', 'dsv'] } }
-  NeoBundleLazy 'digitaltoad/vim-jade', { 'autoload': { 'filetypes': ['jade'] } }
-  NeoBundleLazy 'jcf/vim-latex', { 'autoload': { 'filetypes': ['tex'] } }
-  NeoBundleLazy 'guileen/vim-node', { 'autoload': { 'filetypes': ['js'] } }
-  NeoBundleLazy 'plasticboy/vim-markdown', { 'autoload': { 'filetypes': ['md', 'markdown', 'mdown', 'mkd'] } }
-  NeoBundleLazy 'tpope/vim-haml', { 'autoload': { 'filetypes': ['sass', 'scss', 'haml'] } }
-  NeoBundleLazy 'wavded/vim-stylus', { 'autoload': { 'filetypes': ['styl'] } }
-  NeoBundleLazy 'AnsiEsc.vim', { 'autoload': { 'filetypes': ['color', 'ansi', 'esc'] } }
-  NeoBundleLazy 'osyo-manga/unite-highlight', {'autoload': {'unite_sources': ['highlight']}}
-  NeoBundleLazy 'othree/html5.vim', { 'autoload': { 'filetypes': ['html']}}
+    \ }                                     " JavaScript completion/refactoring/documentation etc
+  NeoBundleLazy 'eagletmt/neco-ghc', {
+    \   'autoload': { 'filetypes': ['haskell'] }
+    \ }                                     " Haskell completions
+  NeoBundleLazy 'osyo-manga/vim-marching', {
+    \   'autoload': { 'filetypes': ['c', 'cpp'] } 
+    \ }                                     " C completions
+  NeoBundleLazy 'chrisbra/csv.vim', {
+    \   'autoload': { 'filetypes': ['csv', 'dat', 'dsv'] } 
+    \ }                                     " Csv editing helpers
+  NeoBundleLazy 'guileen/vim-node', {
+    \   'autoload': { 'filetypes': ['js'] }
+    \ }                                     " Node.js completion
+  NeoBundleLazy 'plasticboy/vim-markdown', {
+    \   'autoload': { 'filetypes': ['md', 'markdown', 'mdown', 'mkd'] }
+    \ }                                     " Markdown syntax-files
+  NeoBundleLazy 'tpope/vim-haml', {
+    \   'autoload': { 'filetypes': ['sass', 'scss', 'haml'] }
+    \ }                                     " Haml syntax files
+  NeoBundleLazy 'AnsiEsc.vim', {
+    \   'autoload': { 'filetypes': ['color', 'ansi', 'esc'] }
+    \ }                                     " View ansi-escaped files in it's original color
+  NeoBundleLazy 'osyo-manga/unite-highlight', {
+    \   'autoload': {'unite_sources': ['highlight']}
+    \ }                                      " Preview vim colors
+  NeoBundleLazy 'othree/html5.vim', {
+    \   'autoload': { 'filetypes': ['html']}
+    \ }                                      " HTML5 syntax files
 " }}}
 
 " Completion ----------------------------------------------------------- {{{
@@ -70,6 +93,7 @@ augroup END
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  au FileType html set matchpairs+=<:>
 
   " Enable heavy omni completion.
   if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -78,12 +102,10 @@ augroup END
   let g:neocomplete#sources#omni#input_patterns.c='[^.[:digit:] *\t]\%(\.\|->\)'
   let g:neocomplete#sources#omni#input_patterns.cpp='[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
   let g:neocomplete#sources#omni#input_patterns.php='[^. \t]->\h\w*\|\h\w*::'
+
+  " JavaScript completion
+  let g:neocomplete#sources#omni#functions=get(g:, 'neocomplete#sources#omni#functions', {})
   let g:neocomplete#sources#omni#functions.javascript='tern#Complete'
-" }}}
-
-
-" Languages ------------------------------------------------------------ {{{
-  au FileType html set matchpairs+=<:>
 
   " Syntastic
   set laststatus=2
