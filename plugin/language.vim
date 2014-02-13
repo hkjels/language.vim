@@ -21,7 +21,10 @@ augroup filetypedetect
   au BufNewFile,BufRead *.{color,ansi,esc} set filetype=colored
   au BufNewFile,BufRead *.{md,markdown,mdown,mkd} set filetype=markdown
   au BufNewFile,BufRead *.hs set filetype=haskell
+  au BufNewFile,BufRead *.mcss set filetype=css
 augroup END
+
+let g:vim_markdown_folding_disabled=1
 
 " Module dependencies -------------------------------------------------- {{{
   NeoBundle 'Shougo/neocomplete', { 'depends': [
@@ -93,6 +96,7 @@ augroup END
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  autocmd FileType help setlocal textwidth=0
   au FileType html set matchpairs+=<:>
 
   " Enable heavy omni completion.
